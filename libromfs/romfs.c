@@ -29,8 +29,10 @@ int romfs_init(void* base_addr) {
 }
 
 int romfs_find(romfs_file* file, const char* filename) {
+    uint32_t hashed_name = romfs_hash(filename);
+
     for (uint32_t i = 0; i < header->num_file_entries; i++) {
-        if (file_entries[i].hashed_name == romfs_hash(filename)) {
+        if (file_entries[i].hashed_name == hashed_name) {
             file->data = (void*)((uint8_t*)romfs_base_addr +
                 sizeof(romfs_header) + 
                 file_entries[i].bin_offset);
