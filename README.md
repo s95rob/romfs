@@ -9,18 +9,27 @@ A tiny ROM-based filesystem library and packing tool for 32-bit embedded devices
 In your project's code, simply initialize `romfs` and use it to index your data:
 
 ```c
+// Declared some place elsewhere...
+
 #define MY_PROJECT_ROM_ADDR 0x08000000
+
+void do_something_with_data(volatile void* data, uint32_t size);
 
 // ...
 
 #include "romfs.h"
 
-romfs_init((void*)MY_PROJECT_ROM_ADDR);
+if (!romfs_init((void*)MY_PROJECT_ROM_ADDR)) {
+    // romfs failed to initialize...
+}
 
 romfs_file my_file;
 
-if (romfs_find(&my_file, "myfile1.txt"))
-    do_something_with_data(my_file.data);
+if (romfs_find(&my_file, "myfile1.txt")) {
+    do_something_with_data(my_file.data, my_file.size);
+} else {
+    // romfs_find failed to find "myfile1.txt" ...
+}
 
 ```
 
