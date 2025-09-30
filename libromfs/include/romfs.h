@@ -14,7 +14,7 @@
 
 
 typedef struct {
-    void* data;
+    volatile void* data;
     uint32_t size;
 } romfs_file;
 
@@ -30,7 +30,7 @@ ROMFS_INLINE uint32_t romfs_hash(const char* str) {
 }
 
 
-int romfs_init(void* base_addr);
+int romfs_init(volatile void* base_addr);
 
 int romfs_find(romfs_file* file, const char* filename);
 
