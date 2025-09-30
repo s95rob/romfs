@@ -19,7 +19,7 @@ void do_something_with_data(volatile void* data, uint32_t size);
 
 #include "romfs.h"
 
-if (!romfs_init((void*)MY_PROJECT_ROM_ADDR)) {
+if (!romfs_init((volatile void*)MY_PROJECT_ROM_ADDR)) {
     // romfs failed to initialize...
 }
 
